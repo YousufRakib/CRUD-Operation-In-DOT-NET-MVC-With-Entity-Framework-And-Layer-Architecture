@@ -1,0 +1,107 @@
+﻿@model TFPTest.Models.ViewModel.ViewModel
+@{
+    ViewBag.Title = "CreateAccount";
+    //Layout = null;
+}
+
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Registration</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Custom-css.css" rel="stylesheet" type="text/css" />
+
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+</head>
+<body>
+    @using (Html.BeginForm("CreateAccount", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-3"></div>
+                <div class="col-xs-6">
+                    
+                    <h2 style="text-align:center">Register Form</h2>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label class="text-success">@ViewBag.MailMessage</label>
+                           
+                        </div>
+                    </div>
+                    
+                    <form action="/action_page.php" style="max-width:500px;margin:auto">
+
+                        <div class="input-container">
+                            <i class="fa fa-user icon"></i>
+                            @Html.TextBoxFor(m => m.userAccount.FullName, new { @class = "input-field", placeholder = "FullName", @required = true })
+
+                        </div>
+
+                        <div class="input-container">
+                            <i class="fa fa-envelope icon"></i>
+                            @Html.TextBoxFor(m => m.userAccount.Email, new { @class = "input-field", placeholder = "Email", @required = true })
+                        </div>
+
+                        <div class="input-container">
+                            <i class="fa fa-key icon"></i>
+                            @Html.TextBoxFor(m => m.userAccount.Password, new { @class = "input-field", placeholder = "Password", Type = "Password", @required = true })
+                        </div>
+
+                        <div class="input-container">
+                            <i class="fa fa-location-arrow icon"></i>
+                            @Html.DropDownListFor(x => x.userAccount.OriginType,
+                                                  new  List<SelectListItem>(){
+                                                        new SelectListItem { Text = "Select Origin", Value = "0", Disabled = true, Selected = true }
+                                                        , new SelectListItem { Text = "Local", Value = "Local" }
+                                                        , new SelectListItem { Text = "International", Value = "International" }}
+                                                        , "-Select Origin", new { @class = "form-control", @required = true })
+                        </div>
+
+                        <div class="input-container">
+                            <i class="fa fa-volume-control-phone icon"></i>
+                            @Html.TextBoxFor(m => m.userAccount.ContactNumber, new { @class = "input-field", placeholder = "Contact Number", @required = true })
+                        </div>
+
+                        <div class="input-container">
+                            <i class="fa fa-calendar icon"></i>@Html.TextBoxFor(model => model.userAccount.RegistrationDate, new { @class = "form-control", type = "date" })
+                        </div>
+
+                        <div class="input-container">
+                            <i class="fa fa-location-arrow icon"></i>
+                            @Html.DropDownListFor(x => x.userAccount.Nationality, Model.StatusSelectListItems, "-Select Nationality", new { @class = "form-control", @required = true })
+
+                        </div>
+
+
+                        <div class="input-container">
+                            <i class="fa fa fa-picture-o icon"></i>
+                            @*@Html.LabelFor(model => model.userAccount.ImagePath, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                            <input type="file" name="ImageFile" required />
+                        </div>
+
+                        <div class="input-container">
+                            @Html.CheckBoxFor(model => model.userAccount.Status)
+                            <span>IsActive</span>
+                        </div>
+
+                        <label class="text-danger">@ViewBag.LoginError</label>
+
+
+                        <p>If you already have an account, please <a href="@Url.Action("Login", "Home")" class="elements"><span>Login</span></a></p>
+                        <button type="submit" class="btn" style="width:97%">Submit</button>
+                    </form>
+                </div>
+                <div class="col-xs-3"></div>
+            </div>
+        </div>
+    }
+</body>
+</html>

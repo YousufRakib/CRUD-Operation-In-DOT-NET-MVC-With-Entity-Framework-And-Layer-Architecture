@@ -1,0 +1,57 @@
+﻿@model TFPTest.Models.ViewModel.ViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron" style="margin:0px;padding:0px;">
+    <table class="table table-responsive table-bordered table-hover" style="font-size:12px;margin:0px;padding:0px;" >
+        <thead style="background-color: forestgreen;">
+            <tr>
+                <th>Profile Picture</th>
+                <th>Full Name</th>
+                <th>Origin Type</th>
+                <th>Email Address</th>
+                <th>Contact No</th>
+                <th>Nationality</th>
+                <th>Lead Status</th>
+                <th>Registration Date</th>
+                <th>Action</th>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model.UserAccountList)
+            {
+            <tr class="table-hover">
+                <td><img src="@Url.Content(item.ImagePath)" width="80" height="80" style="border-radius:50%"/></td>
+                <td>@Html.DisplayFor(modelItem => item.FullName)</td>
+                <td>@Html.DisplayFor(modelItem => item.OriginType)</td>
+                <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                <td>@Html.DisplayFor(modelItem => item.ContactNumber)</td>
+                <td>@Html.DisplayFor(modelItem => item.Nationality)</td>
+                <td>
+                    @if (item.Status == true)
+                    {
+                        <label style="background:green;color:white;border-radius:4px;padding:2px">Active</label>
+                    }
+                    else
+                    {
+                        <label style="background:red;color:white;border-radius:4px;padding:2px">InActive</label>
+                    }
+                </td>
+                <td>
+                    @item.RegistrationDate.ToString("dd-MMM-yyyy")
+                </td>
+                <td>
+                    <a href="@Url.Action("EditAccount",new { id = item.UserId })">Edit</a>
+                    <a href="@Url.Action("ViewAccount",new { id = item.UserId })">Details</a>
+                    <a href="@Url.Action("Delete",new { id = item.UserId })">Delete</a>
+                    @*@Html.ActionLink("Delete", "Delete", "Home", new { id = userId })*@
+                </td>
+            </tr>
+             }
+            </tbody>
+        </table>
+   
+    <br />
+    <label class="text-danger">@ViewBag.DeleteError</label>
+</div>

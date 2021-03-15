@@ -1,0 +1,93 @@
+﻿@model TFPTest.Models.ViewModel.ViewModel
+@{
+    ViewBag.Title = "CreateAccount";
+}
+@using (Html.BeginForm("CreateAccount", "Home", FormMethod.Post, new { @id = "frmLogin" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.userAccount.UserId)
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-3"></div>
+            <div class="col-xs-6">
+                
+                <h2 style="text-align:center">Edit Information</h2>
+                <form action="/action_page.php" style="max-width:500px;margin:auto">
+
+                    <div class="input-container">
+                        <i class="fa fa-user icon"></i>
+                        @Html.TextBoxFor(m => m.userAccount.FullName, new { @class = "input-field", placeholder = "FullName", required = "required" })
+
+                    </div>
+
+                    <div class="input-container">
+                        <i class="fa fa-envelope icon"></i>
+                        @Html.TextBoxFor(m => m.userAccount.Email, new { @class = "input-field", placeholder = "Email", required = "required" })
+                    </div>
+
+                    <div class="input-container">
+                        <i class="fa fa-key icon"></i>
+                        @Html.TextBoxFor(m => m.userAccount.Password, new { @class = "input-field", placeholder = "Password", Type = "Password", required = "required" })
+                    </div>
+
+                    <div class="input-container">
+                        <i class="fa fa-location-arrow icon"></i>
+                        @Html.DropDownListFor(x => x.userAccount.OriginType,
+                                              new  List<SelectListItem>(){
+                                                    new SelectListItem { Text = "Select Origin", Value = "0", Disabled = true, Selected = true }
+                                                    , new SelectListItem { Text = "Local", Value = "Local" }
+                                                    , new SelectListItem { Text = "International", Value = "International" }}
+                                                    , "-Select Origin", new { @class = "form-control", required = "required" })
+                    </div>
+
+                    <div class="input-container">
+                        <i class="fa fa-volume-control-phone icon"></i>
+                        @Html.TextBoxFor(m => m.userAccount.ContactNumber, new { @class = "input-field", placeholder = "Contact Number", required = "required" })
+                    </div>
+
+                    <div class="input-container">
+                        <i class="fa fa-calendar icon"></i>@Html.TextBoxFor(model => model.userAccount.RegistrationDate, new { @class = "form-control", type = "date" })
+
+                    </div>
+
+                    <div class="input-container">
+                        <i class="fa fa-location-arrow icon"></i>
+                        @Html.DropDownListFor(x => x.userAccount.Nationality, Model.StatusSelectListItems, "-Select Nationality", new { @class = "form-control", required = "required" })
+                    </div>
+
+                    <div class="input-container">
+                        <i class="fa fa fa-picture-o icon"></i>
+                        <img src="@Url.Content(Model.userAccount.ImagePath)" width="80" height="80" style="border-radius:50%" />
+                        <input type="file" name="ImageFile"/>
+                    </div>
+
+                    <div class="input-container">
+                        @Html.CheckBoxFor(model => model.userAccount.Status)
+                        <span>IsActive</span>
+                    </div>
+                    <button type="submit" class="btn" style="width:97%">Submit</button>
+                </form>
+            </div>
+            <div class="col-xs-3"></div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <meta name="viewport" content="width=device-width" />
+    <title>Registration</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Custom-css.css" rel="stylesheet" type="text/css" />
+
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+
+    @Scripts.Render("~/bundles/jqueryui")
+    @Styles.Render("~/Content/cssjqryUi")
+
+}
